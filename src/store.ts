@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 import { useStorage } from "@vueuse/core";
 import { ElMessage } from "element-plus";
 import { differenceInDays, isSameDay } from "date-fns";
-import { epoch, generateAnswerObjs, incrementDups } from "./utils";
+import { epoch, generateAnswerObjs, incrementDups, selectRandomMiddleLetter } from "./utils";
 import { Answer } from "./models/answer";
 
 export const useMainStore = defineStore({
@@ -165,15 +165,25 @@ export const useMainStore = defineStore({
         allAnswers,
         gameDate: this.gameDate,
       });
+
       this.setYesterdaysAnswersAndLastGameDate({ yesterdaysAnswerObj });
 
       // set yesterday and todays answers and letters
-      const { answers, availableLetters, middleLetter } = todaysAnswerObj;
+      const { answers, availableLetters } = todaysAnswerObj;
 
       this.answers = answers;
       this.availableLetters = availableLetters;
-      this.middleLetter = middleLetter;
-    },
+      this.middleLetter = selectRandomMiddleLetter(availableLetters); // directly generate random middle letter here
+
+      // const randomMiddle = selectRandomMiddleLetter(this.availableLetters);
+      // this.middleLetter = randomMiddle;
+
+      console.log("Available Letters:", this.availableLetters);
+      const randomMiddle = selectRandomMiddleLetter(this.availableLetters);
+      this.middleLetter = randomMiddle;
+      console.log("Selected Middle Letter:", this.middleLetter);
+    }
+    ,
     setYesterdaysAnswersAndLastGameDate({
       yesterdaysAnswerObj,
     }: {

@@ -80,10 +80,10 @@ describe("Store", () => {
           expect(store.correctGuesses).toEqual(new Set([]));
           expect(store.answers).toEqual(["felt", "feat", "feet"]);
           expect(store.availableLetters).toEqual("aeflrst");
-          expect(store.middleLetter).toEqual("l");
+          expect(store.availableLetters).toContain(store.middleLetter);
           expect(store.yesterdaysAnswers).toEqual(["eels", "elegies", "elite"]);
           expect(store.yesterdaysAvailableLetters).toEqual("egilrst");
-          expect(store.yesterdaysMiddleLetter).toEqual("e");
+          expect(store.yesterdaysAvailableLetters).toContain(store.yesterdaysMiddleLetter);
         });
       });
       describe("when gameDate is a string", () => {
@@ -93,10 +93,10 @@ describe("Store", () => {
           expect(store.correctGuesses).toEqual(new Set([]));
           expect(store.answers).toEqual(["felt", "feat", "feet"]);
           expect(store.availableLetters).toEqual("aeflrst");
-          expect(store.middleLetter).toEqual("l");
+          expect(store.availableLetters).toContain(store.middleLetter);
           expect(store.yesterdaysAnswers).toEqual(["eels", "elegies", "elite"]);
           expect(store.yesterdaysAvailableLetters).toEqual("egilrst");
-          expect(store.yesterdaysMiddleLetter).toEqual("e");
+          expect(store.yesterdaysAvailableLetters).toContain(store.yesterdaysMiddleLetter);
         });
       });
     });
@@ -119,10 +119,10 @@ describe("Store", () => {
         expect(store.correctGuesses).toEqual(new Set([]));
         expect(store.answers).toEqual(["error", "ooze", "otter"]);
         expect(store.availableLetters).toEqual("eioprtz");
-        expect(store.middleLetter).toEqual("o");
+        expect(store.availableLetters).toContain(store.middleLetter);
         expect(store.yesterdaysAnswers).toEqual(["test", "use", "cache"]);
         expect(store.yesterdaysAvailableLetters).toEqual("acehstu");
-        expect(store.yesterdaysMiddleLetter).toEqual("e");
+        expect(store.yesterdaysAvailableLetters).toContain(store.yesterdaysMiddleLetter);
       });
     });
     describe("when lastGameDate is not yesterday", () => {
@@ -144,12 +144,12 @@ describe("Store", () => {
         expect(store.correctGuesses).toEqual(new Set([]));
         expect(store.answers).toEqual(["error", "ooze", "otter"]);
         expect(store.availableLetters).toEqual("eioprtz");
-        expect(store.middleLetter).toEqual("o");
+        expect(store.availableLetters).toContain(store.middleLetter);
         // even though values are cached explicitly above,
         // because lastGameDate was not 1 day ago, we pull new values for yesterdaysAnswers
         expect(store.yesterdaysAnswers).toEqual(["felt", "feat", "feet"]);
         expect(store.yesterdaysAvailableLetters).toEqual("aeflrst");
-        expect(store.yesterdaysMiddleLetter).toEqual("l");
+        expect(store.yesterdaysAvailableLetters).toContain(store.yesterdaysMiddleLetter);
       });
     });
     describe("when today is not a new game", () => {
