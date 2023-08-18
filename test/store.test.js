@@ -83,7 +83,9 @@ describe("Store", () => {
           expect(store.availableLetters).toContain(store.middleLetter);
           expect(store.yesterdaysAnswers).toEqual(["eels", "elegies", "elite"]);
           expect(store.yesterdaysAvailableLetters).toEqual("egilrst");
-          expect(store.yesterdaysAvailableLetters).toContain(store.yesterdaysMiddleLetter);
+          expect(store.yesterdaysAvailableLetters).toContain(
+            store.yesterdaysMiddleLetter
+          );
         });
       });
       describe("when gameDate is a string", () => {
@@ -96,7 +98,9 @@ describe("Store", () => {
           expect(store.availableLetters).toContain(store.middleLetter);
           expect(store.yesterdaysAnswers).toEqual(["eels", "elegies", "elite"]);
           expect(store.yesterdaysAvailableLetters).toEqual("egilrst");
-          expect(store.yesterdaysAvailableLetters).toContain(store.yesterdaysMiddleLetter);
+          expect(store.yesterdaysAvailableLetters).toContain(
+            store.yesterdaysMiddleLetter
+          );
         });
       });
     });
@@ -122,7 +126,9 @@ describe("Store", () => {
         expect(store.availableLetters).toContain(store.middleLetter);
         expect(store.yesterdaysAnswers).toEqual(["test", "use", "cache"]);
         expect(store.yesterdaysAvailableLetters).toEqual("acehstu");
-        expect(store.yesterdaysAvailableLetters).toContain(store.yesterdaysMiddleLetter);
+        expect(store.yesterdaysAvailableLetters).toContain(
+          store.yesterdaysMiddleLetter
+        );
       });
     });
     describe("when lastGameDate is not yesterday", () => {
@@ -149,7 +155,9 @@ describe("Store", () => {
         // because lastGameDate was not 1 day ago, we pull new values for yesterdaysAnswers
         expect(store.yesterdaysAnswers).toEqual(["felt", "feat", "feet"]);
         expect(store.yesterdaysAvailableLetters).toEqual("aeflrst");
-        expect(store.yesterdaysAvailableLetters).toContain(store.yesterdaysMiddleLetter);
+        expect(store.yesterdaysAvailableLetters).toContain(
+          store.yesterdaysMiddleLetter
+        );
       });
     });
     describe("when today is not a new game", () => {

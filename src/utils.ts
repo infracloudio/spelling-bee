@@ -95,13 +95,10 @@ const generateAnswerObjs = ({
   return { todaysAnswerObj, yesterdaysAnswerObj };
 };
 
-
-
 const selectRandomMiddleLetter = (availableLetters: string): string => {
   const randomIndex = Math.floor(Math.random() * availableLetters.length);
   return availableLetters[randomIndex];
 };
-
 
 export {
   chunk,
@@ -111,5 +108,5 @@ export {
   incrementDups,
   shuffle,
   zip,
-  selectRandomMiddleLetter
+  selectRandomMiddleLetter,
 };
