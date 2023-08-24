@@ -24,6 +24,7 @@ const darkmode = ref(store.theme === "dark");
 const popupModalShown = ref(
   !localStorage.getItem("full_name") || !localStorage.getItem("email")
 );
+// this.$refs.myInput.focus();
 const onToggleDarkMode = () => {
   popupModalShown.value =
     !localStorage.getItem("full_name") || !localStorage.getItem("email");
@@ -94,6 +95,8 @@ const submitForm = () => {
         <el-input
           v-model="fullName"
           id="fullName"
+          ref="myInput"
+          focus
           placeholder="Enter your full name"></el-input>
       </div>
       <div>

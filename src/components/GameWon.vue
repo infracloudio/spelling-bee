@@ -6,30 +6,35 @@ const store = useMainStore();
 const shareScore = async () => {
   // Making a POST API call using Axios
   try {
-    const response = await axios.post(import.meta.env.VITE_GSA_URL || "", {
-      Score: store.getUserScore,
-      Name: localStorage.getItem("full_name"),
-      Email: localStorage.getItem("email"),
-    }, {
-      headers: {
-        'Content-Type': 'text/plain;charset=utf-8',
+    const response = await axios.post(
+      import.meta.env.VITE_GSA_URL || "",
+      {
+        Score: store.getUserScore,
+        Name: localStorage.getItem("full_name"),
+        Email: localStorage.getItem("email"),
+      },
+      {
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8",
+        },
       }
-    });
-    console.log('Data sent successfully:', response.data);
+    );
+    console.log("Data sent successfully:", response.data);
+    // Example functionality for the share button
+    if (navigator.share) {
+      navigator.share({
+        title: "My Spelling Bee Score!",
+        text: `I scored ${store.getUserScore} on Spelling Bee! Can you beat my score?`,
+        url: window.location.href,
+      });
+    } else {
+      alert("Copied to clipboard!📋");
+      const mytext = `My Spelling Bee Score!\nI scored ${store.getUserScore} on Spelling Bee! Can you beat my score?\n${window.location.href}`
+      await navigator.clipboard.writeText(mytext);
+    }
   } catch (error) {
-    console.error('Error sending data:', error);
+    console.error("Error sending data:", error);
   }
-  // Example functionality for the share button
-  if (navigator.share) {
-    navigator.share({
-      title: 'My Spelling Bee Score!',
-      text: `I scored ${store.getUserScore} on Spelling Bee! Can you beat my score?`,
-      url: window.location.href,
-    });
-  } else {
-    alert('Your browser does not support the Share API');
-  }
-
 };
 </script>
 
@@ -38,10 +43,12 @@ const shareScore = async () => {
     <h2>Your Score: {{ store.getUserScore }} 🎉</h2>
     <p>Well done! You're doing great. Share your score with your friends!</p>
     <p>
-      Share your best streak with friends on Twitter & invite them for a game of cloud native wordle
+      Share your best streak with friends on Twitter & invite them for a game of
+      cloud native world
     </p>
     <p>
-      Help us add more words: <a href="https://github.com/infracloudio/spelling-bee" target="_blank"
+      Help us add more words:
+      <a href="https://github.com/infracloudio/spelling-bee" target="_blank"
         rel="noopener noreferrer">infracloudio/spelling-bee</a>
     </p>
     <button @click="shareScore">Share</button>
@@ -50,7 +57,7 @@ const shareScore = async () => {
 
 <style scoped>
 button {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   /* Green background */
   border: none;
   /* No border */
