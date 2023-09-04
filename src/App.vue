@@ -8,7 +8,8 @@ import Info from "./components/Info.vue";
 import GameWon from "./components/GameWon.vue";
 import allAnswers from "../data/allAnswers.json";
 import { useMainStore } from "./store";
-import { InfoFilled, Calendar, Sunny, Moon } from "@element-plus/icons-vue";
+import { InfoFilled, Calendar, Sunny, Moon, Share } from "@element-plus/icons-vue";
+import axios from "axios";
 
 const store = useMainStore();
 const showYesterdaysAnswers = ref(false);
@@ -56,10 +57,7 @@ store.startGame({ allAnswers });
 </script>
 
 <template>
-  <el-dialog
-    v-model="showGameWonModal"
-    @closed="gameWonModalShown = true"
-    title="Congratulations!">
+  <el-dialog v-model="showGameWonModal" @closed="gameWonModalShown = true" title="Congratulations!">
     <GameWon />
   </el-dialog>
   <el-dialog v-model="showYesterdaysAnswers" :title="$t('Yesterdays Answers')">
@@ -74,7 +72,8 @@ store.startGame({ allAnswers });
     <el-header height="2em" id="title-header">
       <h2>
         <strong> Spelling Bee </strong>
-        <span> {{ store.getGameDateString }} </span>
+        <!-- <span> {{ store.getGameDateString }} </span> -->
+
       </h2>
     </el-header>
     <el-menu mode="horizontal" :ellipsis="false">
@@ -86,30 +85,26 @@ store.startGame({ allAnswers });
         </el-tooltip>
         <span class="responsive-menu-text">{{ $t("Info") }}</span>
       </el-menu-item>
-      <el-menu-item index="2" @click="showYesterdaysAnswers = true">
+
+      
+
+        Share</button>
+      <!-- <el-menu-item index="2" @click="showYesterdaysAnswers = true">
         <el-tooltip :content="$t('Yesterday')" placement="top">
           <el-icon class="menu-icon">
             <Calendar />
           </el-icon>
         </el-tooltip>
         <span class="responsive-menu-text">{{ $t("Yesterday") }}</span>
-      </el-menu-item>
+      </el-menu-item> -->
       <el-menu-item index="3">
-        <el-switch
-          v-model="darkmode"
-          @change="onToggleDarkMode"
-          class="darkmode-switch"
-          style="--el-switch-on-color: $bl-yellow"
-          inline-prompt
-          size="large"
-          :active-icon="Sunny"
+        <el-switch v-model="darkmode" @change="onToggleDarkMode" class="darkmode-switch"
+          style="--el-switch-on-color: $bl-yellow" inline-prompt size="large" :active-icon="Sunny"
           :inactive-icon="Moon" />
       </el-menu-item>
     </el-menu>
     <Progress />
-    <CorrectGuesses
-      @open="onOpenCorrectGuesses"
-      @close="onCloseCorrectGuesses" />
+    <CorrectGuesses @open="onOpenCorrectGuesses" @close="onCloseCorrectGuesses" />
     <Hive :ZIndex="zindex" />
   </div>
 </template>
