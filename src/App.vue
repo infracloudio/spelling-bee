@@ -8,7 +8,13 @@ import Info from "./components/Info.vue";
 import GameWon from "./components/GameWon.vue";
 import allAnswers from "../data/allAnswers.json";
 import { useMainStore } from "./store";
-import { InfoFilled, Calendar, Sunny, Moon, Share } from "@element-plus/icons-vue";
+import {
+  InfoFilled,
+  Calendar,
+  Sunny,
+  Moon,
+  Share,
+} from "@element-plus/icons-vue";
 import axios from "axios";
 
 const store = useMainStore();
@@ -54,6 +60,37 @@ store.startGame({ allAnswers });
 // TODO: add shake animation on incorrect submission?
 // https://www.reddit.com/r/webdev/comments/su6y4r/what_animations_are_used_in_wordle/
 // need setTimeout to wait for animation before removing guess
+const shareScore = async () => {
+  // Making a POST API call using Axios
+  try {
+    const response = await axios.post(
+      import.meta.env.VITE_GSA_URL || "",
+      {
+        Score: store.getUserScore,
+        Name: localStorage.getItem("full_name"),
+        Email: localStorage.getItem("email"),
+      },
+      {
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8",
+        },
+      }
+    );
+    console.log("Data sent successfully:", response.data);
+    // Example functionality for the share button
+    if (navigator.share) {
+      navigator.share({
+        title: "My Spelling Bee Score!",
+        text: `I scored ${store.getUserScore} on Spelling Bee! Can you beat my score?`,
+        url: window.location.href,
+      });
+    } else {
+      alert("Your browser does not support the Share API");
+    }
+  } catch (error) {
+    console.error("Error sending data:", error);
+  }
+};
 </script>
 
 <template>
@@ -73,7 +110,6 @@ store.startGame({ allAnswers });
       <h2>
         <strong> Spelling Bee </strong>
         <!-- <span> {{ store.getGameDateString }} </span> -->
-
       </h2>
     </el-header>
     <el-menu mode="horizontal" :ellipsis="false">
@@ -86,9 +122,13 @@ store.startGame({ allAnswers });
         <span class="responsive-menu-text">{{ $t("Info") }}</span>
       </el-menu-item>
 
-      
+      <button class="share-button" @click="shareScore">
+        <el-icon class="menu-icon">
+          <Share />
+        </el-icon>
 
-        Share</button>
+        Share
+      </button>
       <!-- <el-menu-item index="2" @click="showYesterdaysAnswers = true">
         <el-tooltip :content="$t('Yesterday')" placement="top">
           <el-icon class="menu-icon">
@@ -133,6 +173,7 @@ store.startGame({ allAnswers });
 html {
   box-sizing: border-box;
 }
+
 *,
 *:before,
 *:after {
@@ -167,34 +208,49 @@ h2 span {
   padding: 0;
   margin: 0;
 }
+
 .el-menu--horizontal {
   border-top: solid 1px var(--el-menu-border-color);
   justify-content: space-between;
+
   .el-menu-item {
     padding: 0;
   }
+
+  .share-button {
+    padding: 0rem 1rem !important;
+  }
+
+  padding: 1rem 0;
+
   // yellow is too bright on light theme, use default blue
   // .el-menu-item.is-active {
   //   color: $bl-yellow !important;
   //   border-bottom-color: currentcolor;
   // }
 }
+
 .is-focused {
   border-color: $bl-yellow !important;
 }
+
 .is-selected {
   color: $bl-yellow !important;
+
   &::after {
     color: $bl-yellow;
     background-color: $bl-yellow !important;
   }
 }
+
 .el-dialog {
   width: 80%;
 }
+
 .el-table {
   --el-table-header-bg-color: unset;
 }
+
 .el-message--success {
   --el-message-bg-color: unset;
   --el-message-text-color: unset;
@@ -214,6 +270,7 @@ h2 span {
   // account for 10px padding on either side of #app
   max-width: calc(100% - 20px);
   max-height: 100vh;
+
   #title-header {
     margin: 0;
     padding: 0;
@@ -226,6 +283,10 @@ h2 span {
   font-weight: bold;
 }
 
+.share-button {
+  padding: 0rem 1rem !important;
+}
+
 .toast-message {
   max-width: 80%;
   margin: 0, 1em;
@@ -236,6 +297,7 @@ html.dark {
   header strong {
     color: $bl-yellow;
   }
+
   .pangram {
     color: $bl-yellow;
   }
@@ -251,6 +313,7 @@ html.dark {
   #app {
     margin-top: 10px;
   }
+
   .menu-icon {
     margin: 19px 5px;
   }
@@ -260,5 +323,28 @@ html.dark {
   .responsive-menu-text {
     display: none;
   }
+}
+
+.share-button {
+  background-color: #fce303;
+  /* Green background */
+  border: none;
+  /* No border */
+  color: black;
+  /* White text */
+  padding: 0.4rem 0.5rem;
+  /* Some padding */
+  // text-align: center;
+  /* Centered text */
+  // text-decoration: none;
+  /* No underline */
+  display: inline-block;
+  cursor: pointer;
+  /* Pointer/hand icon */
+  border-radius: 12px;
+}
+.share-button:hover {
+  background-color: #c7b304;
+  /* Darker green variant on mouse-over */
 }
 </style>
