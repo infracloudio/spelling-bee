@@ -38,7 +38,7 @@ const onToggleDarkMode = () => {
 };
 
 const showGameWonModal = computed(
-  () => store.getProgressPercentage >= 12 && gameWonModalShown.value === false
+  () => store.getCorrectGuesses.length >= 5 && gameWonModalShown.value === false
 );
 
 const onOpenCorrectGuesses = () => {
