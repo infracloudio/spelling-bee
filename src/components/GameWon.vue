@@ -1,15 +1,31 @@
 <script setup lang="ts">
 import { useMainStore } from "../store";
 import axios from "axios";
-import { ref } from 'vue';
+import { ref } from "vue";
 import messages from "../../data/shareMessage.json";
 const store = useMainStore();
 let shareButton = ref("Share");
+
+const attemptShare = (shareData: object) => {
+  return (
+    // Deliberately exclude Firefox Mobile, because its Web Share API isn't working correctly
+    // browser.name?.toUpperCase().indexOf('FIREFOX') === -1 &&
+    // webShareApiDeviceTypes.indexOf(device.type ?? '') !== -1 &&
+    navigator.canShare && navigator.canShare(shareData) && navigator.share
+  );
+};
+
 const shareScore = async () => {
+  const randomNumber = Math.floor(Math.random() * 10);
+  const score = store.getUserScore;
+
+  const mytext = `${messages[randomNumber].title}\n${messages[
+    randomNumber
+  ].text.replace("<SCORE>", score.toString())}\n${window.location.href}`;
+  navigator.clipboard.writeText(mytext);
+
   // Making a POST API call using Axios
   try {
-    const randomNumber = Math.floor(Math.random() * 10);
-
     shareButton.value = `<svg viewBox="0 0 200 50" width="auto" height="auto">
                             <!-- Background -->
                             <rect x="0" y="0" width="200" height="50" fill="#fce303"></rect>
@@ -42,18 +58,18 @@ const shareScore = async () => {
       }
     );
     console.log("Data sent successfully:", response.data);
-    // Example functionality for the share button
-    const score = store.getUserScore
-    if (navigator.share) {
-      navigator.share({
-        title: messages[randomNumber].title,
-        text: (messages[randomNumber].text).replace("<SCORE>", score.toString()),
-        url: window.location.href,
-      });
+
+    const shareObject = {
+      title: messages[randomNumber].title,
+      text: messages[randomNumber].text.replace("<SCORE>", score.toString()),
+      url: window.location.href,
+    };
+    if (attemptShare(shareObject)) {
+      navigator.share(shareObject);
     } else {
-      alert("Copied to clipboard!📋");
-      const mytext = `${messages[randomNumber].title}\n${(messages[randomNumber].text).replace("<SCORE>", score.toString())}\n${window.location.href}`;
-      await navigator.clipboard.writeText(mytext);
+      alert(
+        "Oops something is not right, we have copied the message to your clipboard :D"
+      );
     }
   } catch (error) {
     console.error("Error sending data:", error);
@@ -61,7 +77,6 @@ const shareScore = async () => {
 
   shareButton.value = `Share`;
 };
-
 </script>
 
 <template>
