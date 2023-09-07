@@ -29,7 +29,7 @@ const shareScore = async () => {
       });
     } else {
       alert("Copied to clipboard!📋");
-      const mytext = `My Spelling Bee Score!\nI scored ${store.getUserScore} on Spelling Bee! Can you beat my score?\n${window.location.href}`
+      const mytext = `My Spelling Bee Score!\nI scored ${store.getUserScore} on Spelling Bee! Can you beat my score?\n${window.location.href}`;
       await navigator.clipboard.writeText(mytext);
     }
   } catch (error) {
@@ -48,8 +48,12 @@ const shareScore = async () => {
     </p>
     <p>
       Help us add more words:
-      <a href="https://github.com/infracloudio/spelling-bee" target="_blank"
-        rel="noopener noreferrer">infracloudio/spelling-bee</a>
+      <a
+        href="https://github.com/infracloudio/spelling-bee"
+        target="_blank"
+        rel="noopener noreferrer"
+        >infracloudio/spelling-bee</a
+      >
     </p>
     <button @click="shareScore">Share</button>
   </div>

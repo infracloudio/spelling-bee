@@ -24,7 +24,6 @@ const popupModalShown = ref(
 );
 
 const darkmode = ref(store.theme === "dark");
-// this.$refs.myInput.focus();
 const onToggleDarkMode = () => {
   popupModalShown.value =
     !localStorage.getItem("full_name") || !localStorage.getItem("email");
@@ -188,7 +187,6 @@ const submitForm = () => {
 html {
   box-sizing: border-box;
 }
-
 *,
 *:before,
 *:after {
@@ -223,43 +221,34 @@ h2 span {
   padding: 0;
   margin: 0;
 }
-
 .el-menu--horizontal {
   border-top: solid 1px var(--el-menu-border-color);
   justify-content: space-between;
-
   .el-menu-item {
     padding: 0;
   }
-
   // yellow is too bright on light theme, use default blue
   // .el-menu-item.is-active {
   //   color: $bl-yellow !important;
   //   border-bottom-color: currentcolor;
   // }
 }
-
 .is-focused {
   border-color: $bl-yellow !important;
 }
-
 .is-selected {
   color: $bl-yellow !important;
-
   &::after {
     color: $bl-yellow;
     background-color: $bl-yellow !important;
   }
 }
-
 .el-dialog {
   width: 80%;
 }
-
 .el-table {
   --el-table-header-bg-color: unset;
 }
-
 .el-message--success {
   --el-message-bg-color: unset;
   --el-message-text-color: unset;
@@ -279,7 +268,6 @@ h2 span {
   // account for 10px padding on either side of #app
   max-width: calc(100% - 20px);
   max-height: 100vh;
-
   #title-header {
     margin: 0;
     padding: 0;
@@ -302,7 +290,6 @@ html.dark {
   header strong {
     color: $bl-yellow;
   }
-
   .pangram {
     color: $bl-yellow;
   }
@@ -318,7 +305,6 @@ html.dark {
   #app {
     margin-top: 10px;
   }
-
   .menu-icon {
     margin: 19px 5px;
   }
