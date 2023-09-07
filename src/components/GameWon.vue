@@ -22,28 +22,32 @@ const shareScore = async () => {
   const mytext = `${messages[randomNumber].title}\n${messages[
     randomNumber
   ].text.replace("<SCORE>", score.toString())}\n${window.location.href}`;
-  navigator.clipboard.writeText(mytext);
+
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(mytext);
+  }
+
+  shareButton.value = `<svg viewBox="0 0 200 50" width="auto" height="auto">
+                          <!-- Background -->
+                          <rect x="0" y="0" width="200" height="50" fill="#fce303"></rect>
+
+                          <!-- Loader Circles -->
+                          <circle id="dot1" cx="10" cy="25" r="10" fill="#4c51bf">
+                            <animate attributeName="cx" dur="1.5s" repeatCount="indefinite" values="10; 190; 10"></animate>
+                          </circle>
+                          <circle id="dot2" cx="10" cy="25" r="10" fill="#4c51bf">
+                            <animate attributeName="cx" dur="1.5s" repeatCount="indefinite" values="10; 190; 10" begin="0.3s"></animate>
+                          </circle>
+                          <circle id="dot3" cx="10" cy="25" r="10" fill="#4c51bf">
+                            <animate attributeName="cx" dur="1.5s" repeatCount="indefinite" values="10; 190; 10" begin="0.6s"></animate>
+                          </circle>
+                          <circle id="dot4" cx="10" cy="25" r="10" fill="#4c51bf">
+                            <animate attributeName="cx" dur="1.5s" repeatCount="indefinite" values="10; 190; 10" begin="0.9s"></animate>
+                          </circle>
+                        </svg>`;
 
   // Making a POST API call using Axios
   try {
-    shareButton.value = `<svg viewBox="0 0 200 50" width="auto" height="auto">
-                            <!-- Background -->
-                            <rect x="0" y="0" width="200" height="50" fill="#fce303"></rect>
-                            
-                            <!-- Loader Circles -->
-                            <circle id="dot1" cx="10" cy="25" r="10" fill="#4c51bf">
-                              <animate attributeName="cx" dur="1.5s" repeatCount="indefinite" values="10; 190; 10"></animate>
-                            </circle>
-                            <circle id="dot2" cx="10" cy="25" r="10" fill="#4c51bf">
-                              <animate attributeName="cx" dur="1.5s" repeatCount="indefinite" values="10; 190; 10" begin="0.3s"></animate>
-                            </circle>
-                            <circle id="dot3" cx="10" cy="25" r="10" fill="#4c51bf">
-                              <animate attributeName="cx" dur="1.5s" repeatCount="indefinite" values="10; 190; 10" begin="0.6s"></animate>
-                            </circle>
-                            <circle id="dot4" cx="10" cy="25" r="10" fill="#4c51bf">
-                              <animate attributeName="cx" dur="1.5s" repeatCount="indefinite" values="10; 190; 10" begin="0.9s"></animate>
-                            </circle>
-                          </svg>`;
     const response = await axios.post(
       import.meta.env.VITE_GSA_URL || "",
       {
@@ -67,9 +71,13 @@ const shareScore = async () => {
     if (attemptShare(shareObject)) {
       navigator.share(shareObject);
     } else {
-      alert(
-        "Oops something is not right, we have copied the message to your clipboard :D"
-      );
+      if (navigator.clipboard) {
+        alert(
+          "Oops something is not right, we have copied the message to your clipboard :D"
+        );
+      } else {
+        alert("Hmm, looks like we can't share! :(");
+      }
     }
   } catch (error) {
     console.error("Error sending data:", error);
@@ -89,8 +97,12 @@ const shareScore = async () => {
     </p>
     <p>
       Help us add more words:
-      <a href="https://github.com/infracloudio/spelling-bee" target="_blank"
-        rel="noopener noreferrer">infracloudio/spelling-bee</a>
+      <a
+        href="https://github.com/infracloudio/spelling-bee"
+        target="_blank"
+        rel="noopener noreferrer"
+        >infracloudio/spelling-bee</a
+      >
     </p>
     <button @click="shareScore" v-html="shareButton"></button>
   </div>
