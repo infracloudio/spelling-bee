@@ -41,7 +41,7 @@ const shareScore = async () => {
 <template>
   <div>
     <h2>Your Score: {{ store.getUserScore }} 🎉</h2>
-    <p>Well done! You're doing great. Share your score with your friends!</p>
+    <p>Well done! You did great. Share your score with your friends!</p>
     <p>
       Share your best streak with friends on Twitter & invite them for a game of
       cloud native world

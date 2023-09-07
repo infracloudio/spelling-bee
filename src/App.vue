@@ -19,11 +19,11 @@ let timer: any;
 
 const fullName = ref("");
 const email = ref("");
-
-const darkmode = ref(store.theme === "dark");
 const popupModalShown = ref(
   !localStorage.getItem("full_name") || !localStorage.getItem("email")
 );
+
+const darkmode = ref(store.theme === "dark");
 // this.$refs.myInput.focus();
 const onToggleDarkMode = () => {
   popupModalShown.value =
