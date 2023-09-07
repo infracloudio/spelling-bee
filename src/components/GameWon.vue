@@ -1,11 +1,33 @@
 <script setup lang="ts">
 import { useMainStore } from "../store";
 import axios from "axios";
-
+import { ref } from 'vue';
+import messages from "../../data/shareMessage.json";
 const store = useMainStore();
+let shareButton = ref("Share");
 const shareScore = async () => {
   // Making a POST API call using Axios
   try {
+    const randomNumber = Math.floor(Math.random() * 10);
+
+    shareButton.value = `<svg viewBox="0 0 200 50" width="auto" height="auto">
+                            <!-- Background -->
+                            <rect x="0" y="0" width="200" height="50" fill="#fce303"></rect>
+                            
+                            <!-- Loader Circles -->
+                            <circle id="dot1" cx="10" cy="25" r="10" fill="#4c51bf">
+                              <animate attributeName="cx" dur="1.5s" repeatCount="indefinite" values="10; 190; 10"></animate>
+                            </circle>
+                            <circle id="dot2" cx="10" cy="25" r="10" fill="#4c51bf">
+                              <animate attributeName="cx" dur="1.5s" repeatCount="indefinite" values="10; 190; 10" begin="0.3s"></animate>
+                            </circle>
+                            <circle id="dot3" cx="10" cy="25" r="10" fill="#4c51bf">
+                              <animate attributeName="cx" dur="1.5s" repeatCount="indefinite" values="10; 190; 10" begin="0.6s"></animate>
+                            </circle>
+                            <circle id="dot4" cx="10" cy="25" r="10" fill="#4c51bf">
+                              <animate attributeName="cx" dur="1.5s" repeatCount="indefinite" values="10; 190; 10" begin="0.9s"></animate>
+                            </circle>
+                          </svg>`;
     const response = await axios.post(
       import.meta.env.VITE_GSA_URL || "",
       {
@@ -21,21 +43,25 @@ const shareScore = async () => {
     );
     console.log("Data sent successfully:", response.data);
     // Example functionality for the share button
+    const score = store.getUserScore
     if (navigator.share) {
       navigator.share({
-        title: "My Spelling Bee Score!",
-        text: `I scored ${store.getUserScore} on Spelling Bee! Can you beat my score?`,
+        title: messages[randomNumber].title,
+        text: (messages[randomNumber].text).replace("<SCORE>", score.toString()),
         url: window.location.href,
       });
     } else {
       alert("Copied to clipboard!📋");
-      const mytext = `My Spelling Bee Score!\nI scored ${store.getUserScore} on Spelling Bee! Can you beat my score?\n${window.location.href}`;
+      const mytext = `${messages[randomNumber].title}\n${(messages[randomNumber].text).replace("<SCORE>", score.toString())}\n${window.location.href}`;
       await navigator.clipboard.writeText(mytext);
     }
   } catch (error) {
     console.error("Error sending data:", error);
   }
+
+  shareButton.value = `Share`;
 };
+
 </script>
 
 <template>
@@ -48,24 +74,22 @@ const shareScore = async () => {
     </p>
     <p>
       Help us add more words:
-      <a
-        href="https://github.com/infracloudio/spelling-bee"
-        target="_blank"
-        rel="noopener noreferrer"
-        >infracloudio/spelling-bee</a
-      >
+      <a href="https://github.com/infracloudio/spelling-bee" target="_blank"
+        rel="noopener noreferrer">infracloudio/spelling-bee</a>
     </p>
-    <button @click="shareScore">Share</button>
+    <button @click="shareScore" v-html="shareButton"></button>
   </div>
 </template>
 
 <style scoped>
 button {
-  background-color: #4caf50;
+  width: 6rem;
+  height: 4rem;
+  background-color: rgb(252, 227, 3);
   /* Green background */
   border: none;
   /* No border */
-  color: white;
+  color: black;
   /* White text */
   padding: 12px 24px;
   /* Some padding */
@@ -86,7 +110,7 @@ button {
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: #fce303;
   /* Darker green variant on mouse-over */
 }
 </style>

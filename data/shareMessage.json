@@ -1,0 +1,42 @@
+[
+    {
+        "title": "My Spelling Bee Score!",
+        "text": "I scored <SCORE> on Spelling Bee! Can you beat my score?"
+    },
+    {
+        "title": "Can You Top This?",
+        "text": "Just made <SCORE> points in Spelling Bee! Try to top that!"
+    },
+    {
+        "title": "Match My Score!",
+        "text": "Wow, I got <SCORE> points in Spelling Bee! Can you match it?"
+    },
+    {
+        "title": "Beat My Score!",
+        "text": "Beat my Spelling Bee score of <SCORE> if you can!"
+    },
+    {
+        "title": "Up for a Challenge?",
+        "text": "My Spelling Bee score is <SCORE>. Do you think you can beat me?"
+    },
+    {
+        "title": "Spelling Bee Challenge!",
+        "text": "Just scored <SCORE> in Spelling Bee! Are you up for the challenge?"
+    },
+    {
+        "title": "Spelling Champ!",
+        "text": "I'm a spelling champ with <SCORE> points! How about you?"
+    },
+    {
+        "title": "What's Your Score?",
+        "text": "I've got <SCORE> points in Spelling Bee! What's your score?"
+    },
+    {
+        "title": "Can You Do Better?",
+        "text": "My Spelling Bee score is <SCORE>. Can you do better?"
+    },
+    {
+        "title": "Catch Up If You Can!",
+        "text": "Reached <SCORE> points in Spelling Bee! Let's see if you can catch up!"
+    }
+]
