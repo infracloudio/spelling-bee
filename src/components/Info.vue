@@ -13,6 +13,7 @@ const email = "conor.sheehan.dev@gmail.com";
       <li>{{ $t("helpWordRule3") }}.</li>
     </ul>
 
+    <!--
     <h3>{{ $t("helpScorePoints") }}</h3>
 
     <ul>
@@ -23,21 +24,34 @@ const email = "conor.sheehan.dev@gmail.com";
 
     <h3>Support</h3>
     <Support />
+    -->
+
+    <h3>How to win swags</h3>
+    <ul>
+      <li>Find two words from the hive</li>
+      <li>Follow  the message on social media</li>
+    </ul>
 
     <h3>{{ $t("AboutGame") }}</h3>
     <ul>
+      <!--
       <li>
         {{ $t("AboutGameText") }}
       </li>
+      -->
       <li>
         {{ $t("InspirationSpellingBee") }}
         <el-link
           type="primary"
           href="https://www.nytimes.com/puzzles/spelling-bee"
           target="_blank">
-          New York Times Spelling Bee
+          New York Times Spelling Bee.
         </el-link>
       </li>
+      <li>
+        The words can be related to Go, Cloud Native, and tech in general.
+      </li>
+      <!--
       <li>
         {{ $t("WordlistSource") }}
         <el-link
@@ -47,8 +61,20 @@ const email = "conor.sheehan.dev@gmail.com";
           Wordlist
         </el-link>
       </li>
+      -->
     </ul>
 
+    <h3>Credits</h3>
+    <span>This game is based on
+       <el-link
+         type="primary"
+         href="https://github.com/ConorSheehan1/spelling-bee/"
+         target="_blank"
+         >ConorSheehan1/spelling-bee
+       </el-link>
+     </span>
+
+    <!--
     <h3>{{ $t("Bugs") }}</h3>
     <ul>
       <li>
@@ -65,6 +91,7 @@ const email = "conor.sheehan.dev@gmail.com";
         }}</el-link>
       </li>
     </ul>
+    -->
   </div>
 </template>
 

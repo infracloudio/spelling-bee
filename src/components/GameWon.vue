@@ -91,8 +91,7 @@ const shareScore = async () => {
     </p>
     <p>
       And stand a chance to win an electric
-      <strong>hoverboard! 💨</strong>, do keep an 👁️ on your social media
-      platform! 😉🏆
+      <strong>hoverboard! 💨</strong>
     </p>
     <p>
       <img
@@ -110,6 +109,7 @@ const shareScore = async () => {
       </el-icon>
       <strong>Share</strong>
     </el-button>
+  <p style="font-size: x-small; color: grey">The winners for final prize will be choosen randomly and the final decision lies with InfraCloud Team.</p>
   </div>
 </template>
 
