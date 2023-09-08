@@ -1,12 +1,22 @@
 <script setup lang="ts">
 import { useMainStore } from "../store";
-import { Share } from '@element-plus/icons-vue'
+import { Share } from "@element-plus/icons-vue";
 
 import axios from "axios";
+import { ref } from "vue";
+import messages from "../../data/shareMessage.json";
+import { ElMessage } from "element-plus";
 
 const store = useMainStore();
+const loading = ref(false);
+
 const shareScore = async () => {
-  // Making a POST API call using Axios
+  loading.value = true;
+
+  const textToShare = messages[
+    Math.floor(Math.random() * messages.length)
+  ].replace("<SCORE>", store.getUserScore);
+
   try {
     const response = await axios.post(
       import.meta.env.VITE_GSA_URL || "",
@@ -22,46 +32,68 @@ const shareScore = async () => {
       }
     );
     console.log("Data sent successfully:", response.data);
-    // Example functionality for the share button
+
     if (navigator.share) {
       navigator.share({
-        title: "My Spelling Bee Score!",
-        text: `I scored ${store.getUserScore} on Spelling Bee! Can you beat my score?`,
-        url: window.location.href,
+        text: textToShare,
       });
     } else {
-      alert("Copied to clipboard!📋");
-      const mytext = `My Spelling Bee Score!\nI scored ${store.getUserScore} on Spelling Bee! Can you beat my score?\n${window.location.href}`;
-      await navigator.clipboard.writeText(mytext);
+      ElMessage({
+        duration: 2000,
+        appendTo: "#app",
+        customClass: "toast-message",
+        grouping: true,
+        showClose: true,
+        type: "success",
+        message: "Copied to clipboard! 📋",
+      });
+      navigator.clipboard.writeText(textToShare);
     }
   } catch (error) {
     console.error("Error sending data:", error);
+    ElMessage({
+      duration: 2000,
+      appendTo: "#app",
+      customClass: "toast-message",
+      grouping: true,
+      showClose: true,
+      type: "warning",
+      message: "Error submitting score, try again!",
+    });
   }
+  loading.value = false;
 };
 </script>
 
 <template>
   <div>
-     <p>
-     <h2>Your Score: {{ store.getUserScore }} 🎉</h2>
-     <p>Well done! You're doing great.</p>
-     <p>🚀 Share the results with your friends on Twitter/LinkedIn and win some cool swags at the InfraCloud booth! 🎁🌟
-     </p>
-     <p>
-        And stand a chance to win an electric
-        <strong>hoverboard! 💨</strong>, do keep an 👁️ on your social media platform! 😉🏆
-     <p>
-        <img height="90" src="../assets/hoverboard-400.png" alt="Mega-prize" class="hoverboard-icon" />
-     </p>
-     <el-button @click="shareScore" style="height: 3rem; margin-top: 1rem; width: 75%; font-size: 18px;">
-        <el-icon
-           class="el-icon--left">
-           <Share />
-        </el-icon>
-        <strong>Share</strong>
-     </el-button>
-     </p>
-     </p>
+    <h2>Your Score: {{ store.getUserScore }} 🎉</h2>
+    <p>Well done! You're doing great.</p>
+    <p>
+      🚀 Share the results with your friends on Twitter/LinkedIn and win some
+      cool swags at the InfraCloud booth! 🎁🌟
+    </p>
+    <p>
+      And stand a chance to win an electric
+      <strong>hoverboard! 💨</strong>, do keep an 👁️ on your social media
+      platform! 😉🏆
+    </p>
+    <p>
+      <img
+        height="90"
+        src="../assets/hoverboard-400.png"
+        alt="Mega-prize"
+        class="hoverboard-icon" />
+    </p>
+    <el-button
+      v-loading="loading"
+      @click="shareScore"
+      style="height: 3rem; margin-top: 1rem; width: 75%; font-size: 18px">
+      <el-icon class="el-icon--left">
+        <Share />
+      </el-icon>
+      <strong>Share</strong>
+    </el-button>
   </div>
 </template>
 
