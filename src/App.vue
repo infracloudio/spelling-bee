@@ -8,6 +8,7 @@ import Info from "./components/Info.vue";
 import GameWon from "./components/GameWon.vue";
 import allAnswers from "../data/allAnswers.json";
 import { useMainStore } from "./store";
+import { Aim } from "@element-plus/icons-vue";
 import { InfoFilled, Calendar, Sunny, Moon } from "@element-plus/icons-vue";
 
 const store = useMainStore();
@@ -81,35 +82,65 @@ const submitForm = () => {
     v-model="showGameWonModal"
     @closed="gameWonModalShown = true"
     title="Congratulations!">
+    <template #header="{ close, titleId, titleClass }">
+      <div>
+        <p style="font-size: 20px; font-weight: 600">
+          <strong>Congratulations!</strong>
+        </p>
+      </div>
+    </template>
     <GameWon />
   </el-dialog>
   <el-dialog
     v-model="popupModalShown"
     title="Welcome to Spelling Bee!"
+    align-center
+    :width="20"
     :close-on-click-modal="false"
+    :lock-scroll="true"
+    :fullscreen="false"
     :show-close="false">
+    <!-- Modal Header Start -->
+    <template #header="{ close, titleId, titleClass }">
+      <div class="my-header">
+        <h4 :id="titleId" :class="titleClass">Welcome to Spelling Bee!</h4>
+      </div>
+    </template>
+    <!-- Modal Header End -->
+
+    <!-- Modal Body Start -->
     <form @submit.prevent="submitForm">
       <div>
-        <label for="fullName">Full Name:</label>
+        <p class="form-label" for="fullName">Full Name</p>
         <el-input
           v-model="fullName"
           id="fullName"
           ref="myInput"
           focus
+          class="input-field"
           placeholder="Enter your full name"></el-input>
       </div>
-      <div>
-        <label for="email">Email:</label>
+      <div class="form-group">
+        <p class="form-label" for="email">Email</p>
         <el-input
           v-model="email"
           id="email"
           placeholder="Enter your email"
+          class="input-field"
           type="email"></el-input>
       </div>
       <div style="margin-top: 20px">
-        <el-button type="primary" native-type="submit">Submit</el-button>
+        <el-button
+          type="primary"
+          color="#fce303"
+          native-type="submit"
+          style="height: 2.5rem; margin-top: 1rem">
+          <strong>Start Game</strong
+          ><el-icon class="el-icon--right"><Aim /> </el-icon>
+        </el-button>
       </div>
     </form>
+    <!-- Modal Body End -->
   </el-dialog>
   <el-dialog v-model="showYesterdaysAnswers" :title="$t('Yesterdays Answers')">
     <YesterdaysAnswers />
@@ -123,7 +154,6 @@ const submitForm = () => {
     <el-header height="2em" id="title-header">
       <h2>
         <strong> Spelling Bee </strong>
-        <span> {{ store.getGameDateString }} </span>
       </h2>
     </el-header>
     <el-menu mode="horizontal" :ellipsis="false">
@@ -212,6 +242,11 @@ h2 span {
   padding-top: 3em;
 }
 
+.form-label {
+  font-weight: bold;
+  text-align: left;
+}
+
 .common-layout {
   max-width: 1000px;
   margin: auto;
@@ -243,9 +278,21 @@ h2 span {
     background-color: $bl-yellow !important;
   }
 }
+
+/* Default styles for both mobile and desktop */
 .el-dialog {
-  width: 80%;
-  max-width: 600px;
+  width: 30%; /* Default width for desktop */
+  max-width: 80%; /* Max width for mobile */
+  border-radius: 5px;
+  box-shadow: 2px 2px 16px rgba(0, 0, 0, 0.2); /* Shadow effect */
+}
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+  .el-dialog {
+    width: 80%; /* Width for mobile */
+    max-width: 80%; /* Max width for mobile */
+  }
 }
 .el-table {
   --el-table-header-bg-color: unset;
@@ -259,6 +306,8 @@ h2 span {
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
+  // Available option for fonts:
+  // font-family: Avenir, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

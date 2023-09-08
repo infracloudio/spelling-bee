@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { useMainStore } from "../store";
+import { Share } from '@element-plus/icons-vue'
+
 import axios from "axios";
 
 const store = useMainStore();
@@ -40,53 +42,53 @@ const shareScore = async () => {
 
 <template>
   <div>
-    <h2>Your Score: {{ store.getUserScore }} 🎉</h2>
-    <p>Well done! You did great. Share your score with your friends!</p>
-    <p>
-      Share your best streak with friends on Twitter & invite them for a game of
-      cloud native world
-    </p>
-    <p>
-      Help us add more words:
-      <a
-        href="https://github.com/infracloudio/spelling-bee"
-        target="_blank"
-        rel="noopener noreferrer"
-        >infracloudio/spelling-bee</a
-      >
-    </p>
-    <button @click="shareScore">Share</button>
+     <p>
+     <h2>Your Score: {{ store.getUserScore }} 🎉</h2>
+     <p>Well done! You're doing great.</p>
+     <p>🚀 Share the results with your friends on Twitter/LinkedIn and win some cool swags at the InfraCloud booth! 🎁🌟
+     </p>
+     <p>
+        And stand a chance to win an electric
+        <strong>hoverboard! 💨</strong>, do keep an 👁️ on your social media platform! 😉🏆
+     <p>
+        <img height="90" src="../assets/hoverboard-400.png" alt="Mega-prize" class="hoverboard-icon" />
+     </p>
+     <el-button @click="shareScore" style="height: 3rem; margin-top: 1rem; width: 75%; font-size: 18px;">
+        <el-icon
+           class="el-icon--left">
+           <Share />
+        </el-icon>
+        <strong>Share</strong>
+     </el-button>
+     </p>
+     </p>
   </div>
 </template>
 
 <style scoped>
 button {
-  background-color: #4caf50;
-  /* Green background */
-  border: none;
-  /* No border */
-  color: white;
-  /* White text */
+  background-color: #fce303;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+  color: #303133;
   padding: 12px 24px;
-  /* Some padding */
   text-align: center;
-  /* Centered text */
   text-decoration: none;
-  /* No underline */
   display: inline-block;
-  /* Display as inline-block */
   font-size: 16px;
-  /* Change default font size */
   margin: 4px 2px;
-  /* Some margin */
   cursor: pointer;
-  /* Pointer/hand icon */
   border-radius: 12px;
-  /* Rounded corners */
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 button:hover {
-  background-color: #45a049;
-  /* Darker green variant on mouse-over */
+  background-color: #fce303;
+  color: #303133;
+}
+
+button:active {
+  background-color: #d2c800;
+  transform: scale(0.95);
+  transition-duration: 0.1s;
 }
 </style>

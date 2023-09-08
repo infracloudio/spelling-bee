@@ -13,7 +13,7 @@ describe("App.vue", () => {
     vi.setSystemTime(new Date(testDate));
   });
   it("should render the date in the title", () => {
-    const testMessage = `Spelling Bee ${testDate}`;
+    const testMessage = `Spelling Bee`;
     const wrapper = shallowMount(App);
     expect(wrapper.get("#title-header").text()).toBe(testMessage);
   });
