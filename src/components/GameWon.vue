@@ -10,15 +10,23 @@ import { ElMessage } from "element-plus";
 const store = useMainStore();
 const loading = ref(false);
 
+const attemptShare = (shareData: object) => {
+  return navigator.canShare && navigator.canShare(shareData) && navigator.share;
+};
+
+// TODO: remove this?
+const handleShareFailure = () => {
+  store.showMessage({
+    type: "warning",
+    message: "Error submitting score, try again!",
+  });
+};
+
 const shareScore = async () => {
-  loading.value = true;
-
-  const textToShare = messages[
-    Math.floor(Math.random() * messages.length)
-  ].replace("<SCORE>", store.getUserScore);
-
+  // TODO: get rid of the try catch as we don't want to wait on
+  // this. The POST is slow, and clipboard copy doesn't work with it.
   try {
-    const response = await axios.post(
+    const response = axios.post(
       import.meta.env.VITE_GSA_URL || "",
       {
         Score: store.getUserScore,
@@ -28,40 +36,48 @@ const shareScore = async () => {
       {
         headers: {
           "Content-Type": "text/plain;charset=utf-8",
-        },
+	},
       }
     );
     console.log("Data sent successfully:", response.data);
-
-    if (navigator.share) {
-      navigator.share({
-        text: textToShare,
-      });
-    } else {
-      ElMessage({
-        duration: 2000,
-        appendTo: "#app",
-        customClass: "toast-message",
-        grouping: true,
-        showClose: true,
-        type: "success",
-        message: "Copied to clipboard! 📋",
-      });
-      navigator.clipboard.writeText(textToShare);
-    }
   } catch (error) {
     console.error("Error sending data:", error);
-    ElMessage({
-      duration: 2000,
-      appendTo: "#app",
-      customClass: "toast-message",
-      grouping: true,
-      showClose: true,
-      type: "warning",
-      message: "Error submitting score, try again!",
-    });
   }
-  loading.value = false;
+
+  const textToShare = messages[
+    Math.floor(Math.random() * messages.length)
+  ].replace("<SCORE>", store.getUserScore);
+
+
+  // Based on
+  // https://github.com/cwackerfuss/react-wordle/blob/adfa447/src/lib/share.ts
+  const shareData = { text: textToShare };
+  let shareSuccess = false;
+
+  try {
+    if (attemptShare(shareData)) {
+      navigator.share(shareData);
+      shareSuccess = true;
+    }
+  } catch (error) {
+    shareSuccess = false;
+  }
+
+  try {
+    if (!shareSuccess) {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(textToShare);
+        store.showMessage({
+          type: "success",
+          message: "Copied to clipboard! 📋",
+        });
+      } else {
+        handleShareFailure();
+      }
+    }
+  } catch (error) {
+    handleShareFailure();
+  }
 };
 </script>
 
