@@ -245,6 +245,7 @@ h2 span {
 }
 .el-dialog {
   width: 80%;
+  max-width: 600px;
 }
 .el-table {
   --el-table-header-bg-color: unset;
