@@ -23,11 +23,10 @@ const handleShareFailure = () => {
 };
 
 const shareScore = async () => {
-  // TODO: get rid of the try catch as we don't want to wait on
-  // this. The POST is slow, and clipboard copy doesn't work with it.
-  try {
-    const response = axios.post(
-      import.meta.env.VITE_GSA_URL || "",
+  // We don't wait here as it causes the clipboard to fail on Firefox.
+  axios
+    .post(
+      import.meta.env.VITE_GSA_URL,
       {
         Score: store.getUserScore,
         Name: localStorage.getItem("full_name"),
@@ -36,18 +35,19 @@ const shareScore = async () => {
       {
         headers: {
           "Content-Type": "text/plain;charset=utf-8",
-	},
+        },
       }
-    );
-    console.log("Data sent successfully:", response.data);
-  } catch (error) {
-    console.error("Error sending data:", error);
-  }
+    )
+    .then((response) => {
+      console.log("Data sent successfully:", response.data);
+    })
+    .catch((error) => {
+      console.error("Error sending data:", error);
+    });
 
   const textToShare = messages[
     Math.floor(Math.random() * messages.length)
   ].replace("<SCORE>", store.getUserScore);
-
 
   // Based on
   // https://github.com/cwackerfuss/react-wordle/blob/adfa447/src/lib/share.ts
