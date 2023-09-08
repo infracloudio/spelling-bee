@@ -81,7 +81,7 @@ const shareScore = async () => {
     <p>
       <img
         height="90"
-        src="../assets/hoverboard-400.png"
+        src="../assets/hoverboard-200.png"
         alt="Mega-prize"
         class="hoverboard-icon" />
     </p>
