@@ -11,14 +11,14 @@ const store = useMainStore();
 const loading = ref(false);
 
 const attemptShare = (shareData: object) => {
-  return navigator.canShare && navigator.canShare(shareData) && navigator.share;
+  return navigator.userAgent.toLowerCase().indexOf("firefox") == -1 && navigator.canShare && navigator.canShare(shareData) && navigator.share;
 };
 
 // TODO: remove this?
 const handleShareFailure = () => {
   store.showMessage({
     type: "warning",
-    message: "Error submitting score, try again!",
+    message: "Failed to copy to clipboard!",
   });
 };
 
