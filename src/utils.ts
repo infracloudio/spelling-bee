@@ -89,7 +89,7 @@ const generateAnswerObjs = ({
   // use days since arbitrary epoch to ensure yesterdays answers is always 1 behind todays.
   const daysSinceEpoch = differenceInDays(gameDate, epoch);
   // pick next puzzle input, % len puzzles to restart if out of index (circular)
-  const todaysAnswerObj = allAnswers[daysSinceEpoch % allAnswers.length];
+  const todaysAnswerObj = allAnswers[Math.floor(Math.random() * allAnswers.length)];
   const yesterdaysAnswerObj =
     allAnswers[(daysSinceEpoch - 1) % allAnswers.length];
   return { todaysAnswerObj, yesterdaysAnswerObj };

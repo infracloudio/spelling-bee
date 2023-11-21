@@ -165,6 +165,7 @@ const submitForm = () => {
         </el-tooltip>
         <span class="responsive-menu-text">{{ $t("Info") }}</span>
       </el-menu-item>
+      <!--
       <el-menu-item index="2" @click="showYesterdaysAnswers = true">
         <el-tooltip :content="$t('Yesterday')" placement="top">
           <el-icon class="menu-icon">
@@ -173,6 +174,7 @@ const submitForm = () => {
         </el-tooltip>
         <span class="responsive-menu-text">{{ $t("Yesterday") }}</span>
       </el-menu-item>
+      -->
       <el-menu-item index="3">
         <el-switch
           v-model="darkmode"
