@@ -24,26 +24,27 @@ const handleShareFailure = () => {
 
 const shareScore = async () => {
   // We don't wait here as it causes the clipboard to fail on Firefox.
-  axios
-    .post(
-      import.meta.env.VITE_GSA_URL,
-      {
-        Score: store.getUserScore,
-        Name: localStorage.getItem("full_name"),
-        Email: localStorage.getItem("email"),
-      },
-      {
-        headers: {
-          "Content-Type": "text/plain;charset=utf-8",
-        },
-      }
-    )
-    .then((response) => {
-      console.log("Data sent successfully:", response.data);
-    })
-    .catch((error) => {
-      console.error("Error sending data:", error);
-    });
+  // Enabled only during conferences
+  // axios
+  //   .post(
+  //     import.meta.env.VITE_GSA_URL,
+  //     {
+  //       Score: store.getUserScore,
+  //       Name: localStorage.getItem("full_name"),
+  //       Email: localStorage.getItem("email"),
+  //     },
+  //     {
+  //       headers: {
+  //         "Content-Type": "text/plain;charset=utf-8",
+  //       },
+  //     }
+  //   )
+  //   .then((response) => {
+  //     console.log("Data sent successfully:", response.data);
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error sending data:", error);
+  //   });
 
   const textToShare = messages[
     Math.floor(Math.random() * messages.length)
@@ -86,13 +87,14 @@ const shareScore = async () => {
     <h2>Your Score: {{ store.getUserScore }} 🎉</h2>
     <p>Well done! You're doing great.</p>
     <p>
-      🚀 Share the results with your friends on Twitter/LinkedIn and win some
-      cool swags at the InfraCloud booth! 🎁🌟
+      Share the results with your friends on Twitter/LinkedIn &
+      invite them for a game of Spelling Bee. 🚀
     </p>
     <p>
-      And stand a chance to win an electric
-      <strong>hoverboard! 💨</strong>
+      You can keep playing to score more
+      and refresh the page to share your high score.
     </p>
+    <!--
     <p>
       <img
         height="90"
@@ -100,16 +102,17 @@ const shareScore = async () => {
         alt="Mega-prize"
         class="hoverboard-icon" />
     </p>
+    -->
     <el-button
       v-loading="loading"
       @click="shareScore"
-      style="height: 3rem; margin-top: 1rem; width: 75%; font-size: 18px">
+      style="height: 3rem; margin-top: 1rem; width: 80%; font-size: 18px">
       <el-icon class="el-icon--left">
         <Share />
       </el-icon>
       <strong>Share</strong>
     </el-button>
-  <p style="font-size: x-small; color: grey">The winners for final prize will be choosen randomly and the final decision lies with InfraCloud Team.</p>
+  <!-- <p style="font-size: x-small; color: grey">The winners for final prize will be choosen randomly and the final decision lies with InfraCloud Team.</p> -->
   </div>
 </template>
 

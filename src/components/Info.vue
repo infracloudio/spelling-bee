@@ -26,11 +26,13 @@ const email = "conor.sheehan.dev@gmail.com";
     <Support />
     -->
 
+    <!--
     <h3>How to win swags</h3>
     <ul>
       <li>Find two words from the hive</li>
       <li>Follow  the message on social media</li>
     </ul>
+    -->
 
     <h3>{{ $t("AboutGame") }}</h3>
     <ul>

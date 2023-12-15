@@ -91,7 +91,9 @@ const submitForm = () => {
     </template>
     <GameWon />
   </el-dialog>
+  <!-- Login modal is disabled, remove the v-if line to enable it. -->
   <el-dialog
+    v-if="false"
     v-model="popupModalShown"
     title="Welcome to Spelling Bee!"
     align-center
