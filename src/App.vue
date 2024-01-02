@@ -9,7 +9,7 @@ import GameWon from "./components/GameWon.vue";
 import allAnswers from "../data/allAnswers.json";
 import { useMainStore } from "./store";
 import { Aim } from "@element-plus/icons-vue";
-import { InfoFilled, Calendar, Sunny, Moon } from "@element-plus/icons-vue";
+import { InfoFilled, HomeFilled, Calendar, Sunny, Moon } from "@element-plus/icons-vue";
 
 const store = useMainStore();
 const showYesterdaysAnswers = ref(false);
@@ -159,6 +159,15 @@ const submitForm = () => {
       </h2>
     </el-header>
     <el-menu mode="horizontal" :ellipsis="false">
+      <el-menu-item index="0">
+	<a href="/">
+	  <el-tooltip :content="'Home'" placement="top">
+	    <el-icon class="menu-icon">
+	      <HomeFilled />
+	    </el-icon>
+	  </el-tooltip>
+	</a>
+      </el-menu-item>
       <el-menu-item index="1" @click="showInfo = true">
         <el-tooltip :content="$t('Info')" placement="top">
           <el-icon class="menu-icon">
@@ -167,6 +176,7 @@ const submitForm = () => {
         </el-tooltip>
         <span class="responsive-menu-text">{{ $t("Info") }}</span>
       </el-menu-item>
+      <div style="flex-grow: 1" />
       <!--
       <el-menu-item index="2" @click="showYesterdaysAnswers = true">
         <el-tooltip :content="$t('Yesterday')" placement="top">
