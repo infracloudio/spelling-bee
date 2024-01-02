@@ -9,7 +9,7 @@ import GameWon from "./components/GameWon.vue";
 import allAnswers from "../data/allAnswers.json";
 import { useMainStore } from "./store";
 import { Aim } from "@element-plus/icons-vue";
-import { InfoFilled, HomeFilled, Calendar, Sunny, Moon } from "@element-plus/icons-vue";
+import { InfoFilled, HomeFilled, Calendar, Sunny, Moon, Share } from "@element-plus/icons-vue";
 
 const store = useMainStore();
 const showYesterdaysAnswers = ref(false);
@@ -89,7 +89,7 @@ const submitForm = () => {
         </p>
       </div>
     </template>
-    <GameWon />
+    <GameWon @close-dialog="gameWonModalShown = true" />
   </el-dialog>
   <!-- Login modal is disabled, remove the v-if line to enable it. -->
   <el-dialog
@@ -187,6 +187,16 @@ const submitForm = () => {
         <span class="responsive-menu-text">{{ $t("Yesterday") }}</span>
       </el-menu-item>
       -->
+      <el-menu-item index="2" @click="gameWonModalShown = false"
+        v-if="gameWonModalShown == true"
+	style="margin-right: 0.5rem">
+	<el-tooltip :content="'Share'" placement="top">
+	  <el-icon class="menu-icon">
+	    <Share />
+	  </el-icon>
+	</el-tooltip>
+        <span class="responsive-menu-text">Share</span>
+      </el-menu-item>
       <el-menu-item index="3">
         <el-switch
           v-model="darkmode"
