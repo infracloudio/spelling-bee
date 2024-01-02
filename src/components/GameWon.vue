@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useMainStore } from "../store";
-import { Share } from "@element-plus/icons-vue";
+import { Share, CaretRight } from "@element-plus/icons-vue";
 
 import axios from "axios";
 import { ref } from "vue";
@@ -91,8 +91,7 @@ const shareScore = async () => {
       invite them for a game of Spelling Bee. 🚀
     </p>
     <p>
-      You can keep playing to score more
-      and refresh the page to share your high score.
+      You can keep playing to score more.
     </p>
     <!--
     <p>
@@ -104,6 +103,14 @@ const shareScore = async () => {
     </p>
     -->
     <el-button
+      @click="this.$emit('close-dialog')"
+      style="height: 3rem; margin-top: 1rem; width: 80%; font-size: 18px">
+      <el-icon class="el-icon--left">
+        <CaretRight />
+      </el-icon>
+      <strong>Keep playing</strong>
+    </el-button>
+    <el-button
       v-loading="loading"
       @click="shareScore"
       style="height: 3rem; margin-top: 1rem; width: 80%; font-size: 18px">
@@ -112,7 +119,7 @@ const shareScore = async () => {
       </el-icon>
       <strong>Share</strong>
     </el-button>
-  <!-- <p style="font-size: x-small; color: grey">The winners for final prize will be choosen randomly and the final decision lies with InfraCloud Team.</p> -->
+    <!-- <p style="font-size: x-small; color: grey">The winners for final prize will be choosen randomly and the final decision lies with InfraCloud Team.</p> -->
   </div>
 </template>
 
@@ -141,5 +148,9 @@ button:active {
   background-color: #d2c800;
   transform: scale(0.95);
   transition-duration: 0.1s;
+}
+
+.el-button + .el-button {
+  margin-left: unset;
 }
 </style>
