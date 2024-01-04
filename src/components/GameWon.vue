@@ -14,6 +14,8 @@ const attemptShare = (shareData: object) => {
   return navigator.userAgent.toLowerCase().indexOf("firefox") == -1 && navigator.canShare && navigator.canShare(shareData) && navigator.share;
 };
 
+const emits = defineEmits(['close-dialog']);
+
 // TODO: remove this?
 const handleShareFailure = () => {
   store.showMessage({
@@ -103,7 +105,7 @@ const shareScore = async () => {
     </p>
     -->
     <el-button
-      @click="this.$emit('close-dialog')"
+      @click="emits('close-dialog')"
       style="height: 3rem; margin-top: 1rem; width: 80%; font-size: 18px">
       <el-icon class="el-icon--left">
         <CaretRight />
